@@ -11,6 +11,7 @@
 		E2C053A82C8B684400840C23 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C053A72C8B684400840C23 /* ContentView.swift */; };
 		E2C053AA2C8B685800840C23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C053A92C8B685800840C23 /* Assets.xcassets */; };
 		E2C053AD2C8B685800840C23 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C053AC2C8B685800840C23 /* Preview Assets.xcassets */; };
+		E2C053B42C8B692800840C23 /* DoCatchTryThrows.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C053B32C8B692800840C23 /* DoCatchTryThrows.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		E2C053A72C8B684400840C23 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E2C053A92C8B685800840C23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2C053AC2C8B685800840C23 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E2C053B32C8B692800840C23 /* DoCatchTryThrows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoCatchTryThrows.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				E2C053A52C8B684400840C23 /* SwiftConcurrencyCourseApp.swift */,
 				E2C053A72C8B684400840C23 /* ContentView.swift */,
+				E2C053B32C8B692800840C23 /* DoCatchTryThrows.swift */,
 				E2C053A92C8B685800840C23 /* Assets.xcassets */,
 				E2C053AB2C8B685800840C23 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2C053B42C8B692800840C23 /* DoCatchTryThrows.swift in Sources */,
 				E2C053A82C8B684400840C23 /* ContentView.swift in Sources */,
 				E2C053A62C8B684400840C23 /* SwiftConcurrencyCourseApp.swift in Sources */,
 			);
