@@ -12,7 +12,7 @@ import SwiftUI
 //throws
 
 class DoCatchTryThrowsDataManager {
-    let isActive: Bool = false
+    let isActive: Bool = true
     
     func getTitle() -> (title: String?, error: Error?) {
         if isActive {
@@ -31,8 +31,16 @@ class DoCatchTryThrowsDataManager {
     }
     
     func getTitle3() throws -> String {
+//        if isActive {
+//            return "New Text"
+//        } else {
+            throw URLError(.badServerResponse)
+//        }
+    }
+    
+    func getTitle4() throws -> String {
         if isActive {
-            return "New Text"
+            return "Final Text"
         } else {
             throw URLError(.badServerResponse)
         }
@@ -66,26 +74,52 @@ class DoCatchTryThrowsViewModel: ObservableObject {
         do {
             let newTitle = try manager.getTitle3()
             self.text = newTitle
-        } catch {
-            let errorDescription = error.localizedDescription
-            self.text = errorDescription
+            
+            let finalTitle = try manager.getTitle4()
+            self.text = finalTitle
+            //if any "try" fails, won't continue and throws
+        } catch let error { //we can remove "let error"
+            self.text = error.localizedDescription
+        }
+    }
+    
+    func fetchTitle4() {
+        let newTitle = try? manager.getTitle3()
+        //optional try, returns nil on error & don't throw
+        if let newTitle = newTitle {
+            self.text = newTitle
+        }
+    }
+    
+    func fetchTitle5() {
+        do {
+            let newTitle = try? manager.getTitle3()
+            if let newTitle = newTitle {
+                self.text = newTitle
+            }
+            
+            let finalTitle = try manager.getTitle4()
+            self.text = finalTitle
+            //if first "try" fails, will continue because it returns nil & didn't throw
+        } catch let error { //we can remove "let error"
+            self.text = error.localizedDescription
         }
     }
 }
-
-struct DoCatchTryThrows: View {
-    @StateObject private var viewModel = DoCatchTryThrowsViewModel()
     
-    var body: some View {
-        Text(viewModel.text)
-            .frame(width: 300, height: 300)
-            .background(Color.blue)
-            .onTapGesture {
-                viewModel.fetchTitle2()
-            }
+    struct DoCatchTryThrows: View {
+        @StateObject private var viewModel = DoCatchTryThrowsViewModel()
+        
+        var body: some View {
+            Text(viewModel.text)
+                .frame(width: 300, height: 300)
+                .background(Color.blue)
+                .onTapGesture {
+                    viewModel.fetchTitle5()
+                }
+        }
     }
-}
-
-#Preview {
-    DoCatchTryThrows()
-}
+    
+    #Preview {
+        DoCatchTryThrows()
+    }
