@@ -55,7 +55,7 @@ class DownloadImageAsyncViewModel: ObservableObject {
     var cancelables = Set<AnyCancellable>()
     
     func fetchImage() async {
-        //        loader.downloadWithEscaping { [weak self] image, error in
+//                loader.downloadWithEscaping { [weak self] image, error in
         //            DispatchQueue.main.async {
         //                self?.image = image
         //            }
@@ -87,7 +87,7 @@ struct DownloadImageAsync: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 200, height: 200)
+                    .frame(width: 250, height: 250)
             }
         } .onAppear() {
             //            viewModel.fetchImage()
