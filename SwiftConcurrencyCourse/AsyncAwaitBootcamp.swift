@@ -34,13 +34,14 @@ class AsyncAwaitBootcampViewModel: ObservableObject {
         
         try? await Task.sleep(for: .seconds(2))
         
-        let author2 = "Author 2: \(Thread.current)"
-        await MainActor.run(body: {
+        
+        await MainActor.run {
+            let author2 = "Author 2: \(Thread.current)"
             self.dataArray.append(author2)
             
             let author3 = "Author 3: \(Thread.current)"
             self.dataArray.append(author3)
-        })
+        }
         
         await addSomething()
     }
@@ -49,12 +50,12 @@ class AsyncAwaitBootcampViewModel: ObservableObject {
         try? await Task.sleep(for: .seconds(2))
         
         let author2 = "Author 2: \(Thread.current)"
-        await MainActor.run(body: {
-            self.dataArray.append(author2)
-            
+        self.dataArray.append(author2)
+        
+        await MainActor.run {
             let author3 = "Author 3: \(Thread.current)"
             self.dataArray.append(author3)
-        })
+        }
     }
 }
 
