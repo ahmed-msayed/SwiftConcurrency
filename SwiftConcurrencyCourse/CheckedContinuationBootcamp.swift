@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// To convert Non Async Code To Async Code
+
 class CheckedContinuationBootcampNetworkManager {
     func getData(url: URL) async throws -> Data {
         do {
@@ -14,6 +16,37 @@ class CheckedContinuationBootcampNetworkManager {
             return data
         } catch {
             throw error
+        }
+    }
+    
+    func getData2(url: URL) async throws -> Data {
+        return try await withCheckedThrowingContinuation { continuation in
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let data = data {
+                    continuation.resume(returning: data)
+                } else if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(throwing: URLError(.badURL))
+                }
+            }
+            .resume()
+        }
+    }
+    
+    //old with completion handler
+    func getHeartImageFromDB(completionHandler: @escaping (_ image: UIImage) -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            completionHandler(UIImage(systemName: "heart.fill")!)
+        }
+    }
+    
+    //new with async
+    func getHeartImageFromDB() async -> UIImage {
+        return await withCheckedContinuation { continuation in
+            getHeartImageFromDB { image in
+                continuation.resume(returning: image)
+            }
         }
     }
 }
@@ -26,7 +59,7 @@ class CheckedContinuationBootcampViewModel: ObservableObject {
         guard let url = URL(string: "https://picsum.photos/400") else { return }
         
         do {
-            let data = try await networkManager.getData(url: url)
+            let data = try await networkManager.getData2(url: url)
             if let image = UIImage(data: data) {
                 await MainActor.run (body: {
                     self.image = image
@@ -35,6 +68,14 @@ class CheckedContinuationBootcampViewModel: ObservableObject {
         } catch {
             print(error)
         }
+    }
+    
+    func getHeartImage() async {
+        /*
+        networkManager.getHeartImageFromDB { image in
+                self.image = image
+        }*/
+        self.image = await networkManager.getHeartImageFromDB()
     }
 }
 
@@ -51,7 +92,7 @@ struct CheckedContinuationBootcamp: View {
             }
         }
         .task {
-            await viewModel.getImage()
+            await viewModel.getHeartImage()
         }
     }
 }

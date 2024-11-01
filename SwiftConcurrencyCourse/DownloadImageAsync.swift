@@ -30,6 +30,10 @@ class DownloadImageAsyncImageLoader {
         }
         .resume()
     }
+    //[weak self] -> class is stored in the Heap, and the URLSession line executes and waits to get data
+    //before executing the completion, weak self sets a low "0" reference count to the class in the Heap
+    //so that if the user clicks "back" before the server responds and return the data, the completion
+    //won't execute and won't run the next line as the class got removed from the Heap in the memory.
     
     func downloadWithCombine() -> AnyPublisher<UIImage?, Error> {
         URLSession.shared.dataTaskPublisher(for: url)
